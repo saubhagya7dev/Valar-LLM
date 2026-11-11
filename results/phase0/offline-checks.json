@@ -1,0 +1,46 @@
+{
+  "kind": "offline_verification_only",
+  "created_at": "2026-11-11T10:03:37.918039+00:00",
+  "python": "3.14.9",
+  "platform": "Windows",
+  "model_executed": false,
+  "gpu_used": false,
+  "cloud_deployed": false,
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "............................                                             [100%]\n28 passed in 0.80s\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "valar_llm.cli",
+        "check"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"kind\": \"offline_fixture_validation\",\n  \"model_executed\": false,\n  \"cases\": [\n    {\n      \"id\": \"research-advisory\",\n      \"task\": \"researcher\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"research-empty\",\n      \"task\": \"researcher\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"research-debunk\",\n      \"task\": \"researcher\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"research-injection\",\n      \"task\": \"researcher\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"compact-advisory\",\n      \"task\": \"researcher.compact\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"compact-empty\",\n      \"task\": \"researcher.compact\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"compact-debunk\",\n      \"task\": \"researcher.compact\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"compact-injection\",\n      \"task\": \"researcher.compact\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"review-supported\",\n      \"task\": \"reviewer\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"review-unknown\",\n      \"task\": \"reviewer\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"review-defense\",\n      \"task\": \"reviewer\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"review-injection\",\n      \"task\": \"reviewer\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"vision-image\",\n      \"task\": \"vision.answer\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"vision-missing\",\n      \"task\": \"vision.answer\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"vision-conflict\",\n      \"task\": \"vision.answer\",\n      \"contract_valid\": true\n    },\n    {\n      \"id\": \"vision-injection\",\n      \"task\": \"vision.answer\",\n      \"contract_valid\": true\n    }\n  ]\n}\n",
+      "stderr": ""
+    }
+  ],
+  "passed": true
+}
