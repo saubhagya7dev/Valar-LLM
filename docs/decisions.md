@@ -35,3 +35,5 @@ The next permitted experiment is the already-planned three-step image-training s
 ## ADR 008: Investigate Modal after verified training and restoration
 
 Conditional, 11 November 2026. The owner authorized investigating Modal only with an enforceable $0 cap. Current official docs now describe a workspace net-spend limit separate from usage budgets, but require a payment method. This changes the route from excluded/unverified to an investigation candidate; it does not authorize deployment before account-specific zero-spend controls are confirmed. `docs/modal-no-spend.md` records the evidence and remaining checks. No payment, account or cloud resource has been activated.
+
+Outcome: the owner's verification dialog requires an upfront $0.50 charge, described as refundable, to unlock the full credit allocation. This fails the current zero-cash-outlay condition before GPU or net-spend verification. Modal is excluded for now; no payment or deployment was performed. Await eligible fee-free ZeroGPU access or an actually approved allocation. The documentation-level existence of a spend cap does not override the observed account entry fee.
