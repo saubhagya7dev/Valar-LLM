@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "INCIDENTS",
+  "type": "object",
+  "properties": {
+    "incidents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "source_quote": {
+            "type": "string"
+          },
+          "publication_date": {
+            "type": "string"
+          },
+          "incident_date": {
+            "type": "string"
+          },
+          "victim": {
+            "type": "string"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "observed attack",
+              "vulnerability advisory",
+              "background guidance"
+            ]
+          },
+          "mechanism": {
+            "type": "string"
+          },
+          "prerequisites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "technologies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mitigations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unknowns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "source_id",
+          "source_quote",
+          "publication_date",
+          "incident_date",
+          "victim",
+          "source_type",
+          "mechanism",
+          "prerequisites",
+          "technologies",
+          "mitigations",
+          "unknowns"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "research_limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "incidents",
+    "research_limitations"
+  ],
+  "additionalProperties": false
+}
