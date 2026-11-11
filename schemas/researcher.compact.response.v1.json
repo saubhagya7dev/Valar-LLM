@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "COMPACT_INCIDENT",
+  "type": "object",
+  "properties": {
+    "k": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "m": {
+      "type": "string"
+    },
+    "p": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "k",
+    "m",
+    "p"
+  ],
+  "additionalProperties": false
+}
