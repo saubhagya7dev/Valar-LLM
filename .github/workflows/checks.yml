@@ -12,3 +12,4 @@ jobs:
       - run: uv run ruff check .
       - run: uv run python -m pytest
       - run: uv run valar check
+      - run: uv run valar pilot validate
