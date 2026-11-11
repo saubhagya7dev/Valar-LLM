@@ -20,8 +20,10 @@ Synthetic examples only; this is not a quality benchmark. Choose a **free GPU ru
 No paid resources, teacher API calls, automatic Hub upload, or public serving from Colab.
 Run `python scripts/prepare_bundle.py notebook` on the development machine and upload its source zip below.
 The notebook installs its own Python 3.12.12 environment, independently of Colab's notebook interpreter.
+If restoring an already-downloaded adapter in a fresh session, run only source upload and environment setup, then jump to **Fresh-session restore**. Do not repeat baseline inference or training.
 """)
-code("""import pathlib
+code("""import io
+import pathlib
 import sys
 import zipfile
 
@@ -29,10 +31,12 @@ from google.colab import files
 
 print('Colab notebook Python:', sys.version.split()[0])
 uploaded = files.upload()
-assert 'valar-phase0-source.zip' in uploaded, 'Upload the prepared source bundle.'
+assert len(uploaded) == 1, 'Upload only the prepared source ZIP.'
+source_name, source_data = next(iter(uploaded.items()))
+assert source_name.startswith('valar-phase0-source') and source_name.endswith('.zip')
 root = pathlib.Path('/content/valar-phase0')
 root.mkdir(exist_ok=True)
-with zipfile.ZipFile('valar-phase0-source.zip') as archive:
+with zipfile.ZipFile(io.BytesIO(source_data)) as archive:
     for member in archive.infolist():
         path = (root / member.filename).resolve()
         assert path.is_relative_to(root.resolve()), 'Unsafe archive member'
@@ -89,18 +93,39 @@ files.download('/content/valar-smoke-results.zip')
 """)
 markdown("""## Fresh-session restore
 After downloading both archives, restart the runtime/session. Re-run only the source upload and environment setup cells. Skip base/training cells. Upload the saved adapter archive below, then run reload inference. This checks restore into a new process; record that the VM/session was actually restarted.
+Paste the adapter archive's SHA-256 when prompted. This cell audits the saved tensors before extraction, then runs only the synthetic image question through the restored adapter. Its result checks restoration mechanics, not unseen-data improvement.
 """)
-code("""uploaded = files.upload()
-assert 'valar-smoke-adapter.zip' in uploaded
+code("""import hashlib
+from datetime import datetime, timezone
+
+uploaded = files.upload()
+assert len(uploaded) == 1, 'Upload only the saved adapter ZIP.'
+adapter_data = next(iter(uploaded.values()))
+expected_sha = input('Adapter ZIP SHA-256: ').strip().lower()
+assert len(expected_sha) == 64 and hashlib.sha256(adapter_data).hexdigest() == expected_sha, 'Checksum mismatch'
+restore_zip = pathlib.Path('/content/valar-restored-adapter.zip')
+restore_zip.write_bytes(adapter_data)
+stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
+audit_output = 'results/runs/restored-checkpoint-audit-' + stamp + '.json'
+audit = subprocess.run([python, '-m', 'valar_llm.eval.checkpoint', str(restore_zip),
+                        '--expected-sha256', expected_sha, '--output', audit_output],
+                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+print(audit.stdout)
+audit.check_returncode()
 destination = pathlib.Path('artifacts').resolve()
 destination.mkdir(exist_ok=True)
-with zipfile.ZipFile('valar-smoke-adapter.zip') as archive:
+with zipfile.ZipFile(io.BytesIO(adapter_data)) as archive:
     for member in archive.infolist():
         assert (destination / member.filename).resolve().is_relative_to(destination)
     archive.extractall(destination)
-subprocess.run([python, '-m', 'valar_llm.eval.smoke', '--adapter', 'artifacts/smoke-adapter',
-                '--output', 'results/runs/reloaded-smoke.json'], check=True)
-print(pathlib.Path('results/runs/reloaded-smoke.json').read_text())
+reload_output = 'results/runs/reloaded-image-smoke-' + stamp + '.json'
+restored = subprocess.run([python, '-m', 'valar_llm.eval.smoke', '--adapter', 'artifacts/smoke-adapter',
+                           '--case', 'vision-image', '--output', reload_output, '--debug-errors'],
+                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+print(restored.stdout[-20000:])
+if pathlib.Path(reload_output).exists():
+    print(pathlib.Path(reload_output).read_text())
+restored.check_returncode()
 """)
 markdown("""## Cloud serving gate
 Colab is not the inference server. Follow `docs/account-setup.md` to prepare an eligible free ZeroGPU Space and restore the adapter there. A new Hugging Face account may have to wait for eligibility. Keep this gate unpassed until remote text/image requests actually work, including a probe from a cloud client while the laptop is off.
