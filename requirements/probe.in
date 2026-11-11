@@ -1,0 +1,4 @@
+gradio-client>=1.13,<2
+pillow>=11.3,<13
+pydantic>=2.12,<3
+jsonschema>=4.25,<5
