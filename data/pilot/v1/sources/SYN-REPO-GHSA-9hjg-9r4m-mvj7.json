@@ -1,0 +1,44 @@
+{
+  "observation_variants": [
+    [
+      {
+        "id": "E1",
+        "claim": "The declaration is a version range, not a resolved version.",
+        "path": "requirements.txt",
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "requests>=2.32",
+        "kind": "observed"
+      },
+      {
+        "id": "E2",
+        "claim": "The supplied code sends a user-provided URL through a Session.",
+        "path": "client.py",
+        "start_line": 1,
+        "end_line": 2,
+        "quote": "session = requests.Session()\nresponse = session.get(user_url)",
+        "kind": "observed"
+      }
+    ],
+    [
+      {
+        "id": "E1",
+        "claim": "The declaration pins Requests.",
+        "path": "requirements.txt",
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "requests==2.32.3",
+        "kind": "observed"
+      },
+      {
+        "id": "E2",
+        "claim": "The supplied Session disables trust_env before the shown request.",
+        "path": "client.py",
+        "start_line": 1,
+        "end_line": 3,
+        "quote": "session = requests.Session()\nsession.trust_env = False\nresponse = session.get(user_url)",
+        "kind": "observed"
+      }
+    ]
+  ]
+}
