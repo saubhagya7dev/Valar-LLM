@@ -22,4 +22,4 @@ Sources:
 
 Do not infer a particular GPU, quota duration, payment requirement or backend-caller attribution from these notes. Before hosting, inspect the actual Space hardware, plan, quota and caller authentication behavior. Do not enable prepaid overage. Record actual account checks without emails, passwords or tokens.
 
-Training GPU time, private artifact storage, inference quota, teacher tokens and the other application components are separate budgets. The owner ran the free Colab setup and first model-loading smoke attempt; its failed inference records are saved under `results/phase0/`. No adapter training, teacher labeling, cloud serving deployment or paid resource activation has been demonstrated.
+Training GPU time, private artifact storage, inference quota, teacher tokens and the other application components are separate budgets. The owner ran Colab setup, base inference and a three-step synthetic adapter-training command; supplied measurements and failures are saved under `results/phase0/`. Checkpoint persistence/reload, teacher labeling and cloud serving deployment have not been demonstrated. No paid resource activation was reported.
