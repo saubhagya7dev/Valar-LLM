@@ -1,0 +1,18 @@
+{
+  "versions": {
+    "orion-v1": [
+      [
+        "Orion reserves - version 1",
+        "Period: 2025 year end",
+        "Reserves (USD millions): 73"
+      ]
+    ],
+    "orion-v2": [
+      [
+        "Orion reserves - version 2",
+        "Period: 2025 year end",
+        "Reserves (USD millions): 91"
+      ]
+    ]
+  }
+}
