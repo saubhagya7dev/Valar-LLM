@@ -10,7 +10,7 @@ Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint
 | Versioned task requests, outputs and fixtures | Three roles plus compact researcher submode; synthetic image pages | Implemented |
 | Free account eligibility | Owner reports all accounts created; hosting eligibility not yet verified | Accounts created |
 | Free training GPU | Owner-supplied result confirms model loading on Tesla T4 | Confirmed for this run |
-| Untuned text and image inference | First attempt: three preprocessing TypeErrors; boundary fix awaits cloud retry | Failed first attempt |
+| Untuned text and image inference | Generation reached; two JSON parsing failures and one reviewer prerequisite failure | Retry failed task checks |
 | Tiny online training and masking audit | Runnable three-step QLoRA command | Not run |
 | External checkpoint persistence | Notebook download/restore procedure | Not run |
 | Fresh-session reload | Separate inference command and manifest checks | Not run |
@@ -42,3 +42,9 @@ The owner reported the notebook's host-Python assertion failing before source up
 The owner subsequently confirmed successful CLI fixture checks in the managed environment and supplied a result file from the T4 at `2026-11-11T10:52:08.976255+00:00`. Model loading took 179.526044222 seconds. All three requested cases recorded immediate `TypeError` failures; there were no valid predictions. The sanitized original report is preserved in `results/phase0/colab-base-smoke-20261111.json`.
 
 Code inspection found plain-string system messages being passed to the multimodal processor. Transformers 4.57.1 scans every message content as typed blocks, producing a TypeError on these strings. The processor boundary now normalizes string content for both inference and training. See [the pinned upstream implementation](https://github.com/huggingface/transformers/blob/v4.57.1/src/transformers/processing_utils.py#L1501). Regression checks cover all three task paths and assistant training text; a corrected Colab inference run is still pending. New notebook attempts use timestamped filenames and expose synthetic-only debug tracebacks. Failed checks now exit unsuccessfully after saving their diagnostics.
+
+## Processor-fix retry
+
+The owner supplied a second T4 report at `2026-11-11T11:01:26.693720+00:00`, preserved in `results/phase0/colab-base-retry-20261111.json`. The model loaded in 9.494565361 seconds and reached generation for all three cases. Compact research and the image answer failed JSON parsing at the first character; their raw text was not saved by that version, so the cause (for example fencing or prose) remains unknown. Review produced parseable JSON but failed the Supported concern prerequisite invariant. No guardrail has been relaxed and no answer is counted as passing.
+
+The synthetic debug flag now preserves exact unparseable output and parsed candidates rejected by evidence checks, so subsequent failures can be diagnosed without guessing. Normal runs still avoid recording raw failure content. A targeted diagnostic retry is required before choosing formatting changes or proceeding to training.
