@@ -23,3 +23,5 @@ Accepted for Phase 0. Three manual QLoRA steps, one example, exact prompt-prefix
 ## ADR 006: Python and dependency separation
 
 Accepted. Offline core supports Python 3.12–3.14. Local checks use installed 3.14; free GPU notebook and Space target 3.12. Heavy CUDA dependencies are locked separately for Linux and never installed on the development laptop by default. Core lockfile is `uv.lock`; GPU/serving lockfiles are generated from explicit requirements inputs. GPU runtime compatibility remains unverified until a real run.
+
+Amended after the first reported Colab setup failure: the notebook kernel is not required to be Python 3.12. A pinned uv bootstrap provisions Python 3.12.12 and a separate Valar environment; all training/evaluation subprocesses use that environment. This preserves the dependency target without relying on Colab's changing default interpreter.
