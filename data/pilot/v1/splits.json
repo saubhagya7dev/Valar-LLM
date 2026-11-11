@@ -1,0 +1,41 @@
+{
+  "manifest_sha256": "0dc701cc964db024929ca3053acd3387f1cfb9cf2e3d58333206d526826686f9",
+  "family_splits": {
+    "GHSA-f82v-jwr5-mffw": "development",
+    "GHSA-cpwx-vrp4-4pq7": "development",
+    "GHSA-9hjg-9r4m-mvj7": "development",
+    "SYN-CEDAR-EXERCISE": "development",
+    "SYN-HARBOR-BUDGET": "development",
+    "SYN-ORION-REPORT": "development",
+    "SYN-ATLAS-LAB": "development",
+    "SYN-PINE-OUTPUT": "development"
+  },
+  "train": [],
+  "test": [],
+  "development": [
+    "P001",
+    "P002",
+    "P003",
+    "P004",
+    "P005",
+    "P006",
+    "P007",
+    "P008",
+    "P009",
+    "P010",
+    "P011",
+    "P012",
+    "P013",
+    "P014",
+    "P015",
+    "P016",
+    "P017",
+    "P018",
+    "P019",
+    "P020",
+    "P021",
+    "P022",
+    "P023",
+    "P024"
+  ]
+}
