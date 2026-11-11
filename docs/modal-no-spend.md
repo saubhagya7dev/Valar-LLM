@@ -29,3 +29,9 @@ Only after the no-spend gate is evidenced should we prepare and activate the sel
 ## Current outcome
 
 Provider documentation supports investigating a net-spend cap. Owner-specific $0 acceptance and effective enforcement remain unverified. No deployment command is authorized to bypass that condition. Hugging Face ZeroGPU remains the card-free alternative when account eligibility or an approved grant is available.
+
+## Owner's initial billing overview
+
+The owner supplied a billing-overview screenshot on 11 November 2026. It shows Starter with **$1.00 included compute credit per month**, a **$1 usage limit set by Modal**, and **$0.00 total spend**. The page offers "Add a payment method to raise this limit." These observed account values supersede an assumption that this workspace already has the generally advertised $30 monthly credit. The screenshot does not establish GPU access or show the effective separate net-spend cap.
+
+The next read-only check is the **Usage limit** tab. Inspect whether it exposes the separate Spend limit and an effective saved $0 value. Do not infer this from $0 spent so far. Do not add a payment method, raise a limit, or launch a workload merely to explore the setting. Modal's [GPU documentation](https://modal.com/docs/guide/gpu) still says GPU use requires a valid payment method, so the $1 allowance alone is not proof that the intended GPU host is available. Evidence is recorded in `results/phase0/modal-account-overview-20261111.json` without the account identifier or payment information.
