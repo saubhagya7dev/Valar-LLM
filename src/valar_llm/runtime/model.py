@@ -36,8 +36,16 @@ def load_model(config, *, quantized=False, adapter=None, cpu=False):
 
 
 def encode(processor, messages, max_tokens, *, generation=True):
+    # ProcessorMixin in Transformers 4.57.1 inspects every message's content
+    # as multimodal blocks, including system and assistant text-only messages.
+    # Tokenizer templates accept strings, but the processor's media scan does not.
+    normalized = [
+        {**message, "content": [{"type": "text", "text": message["content"]}]}
+        if isinstance(message["content"], str) else message
+        for message in messages
+    ]
     batch = processor.apply_chat_template(
-        messages, tokenize=True, add_generation_prompt=generation,
+        normalized, tokenize=True, add_generation_prompt=generation,
         return_dict=True, return_tensors="pt",
     )
     if batch["input_ids"].shape[-1] > max_tokens:
