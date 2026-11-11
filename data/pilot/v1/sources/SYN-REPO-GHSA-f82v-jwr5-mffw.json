@@ -1,0 +1,44 @@
+{
+  "observation_variants": [
+    [
+      {
+        "id": "E1",
+        "claim": "An exact dependency version is declared.",
+        "path": "package.json",
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "{\"next\":\"14.2.24\"}",
+        "kind": "observed"
+      },
+      {
+        "id": "E2",
+        "claim": "The supplied middleware calls a session-check helper.",
+        "path": "middleware.ts",
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "export function middleware(req) { return checkSession(req); }",
+        "kind": "observed"
+      }
+    ],
+    [
+      {
+        "id": "E1",
+        "claim": "An exact dependency version is declared.",
+        "path": "package.json",
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "{\"next\":\"14.2.24\"}",
+        "kind": "observed"
+      },
+      {
+        "id": "E2",
+        "claim": "The deployment configuration names Vercel.",
+        "path": "deploy.json",
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "{\"provider\":\"vercel\"}",
+        "kind": "observed"
+      }
+    ]
+  ]
+}
