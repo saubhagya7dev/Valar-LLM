@@ -47,7 +47,7 @@ def main():
         record = {"id": case["id"], "task": request.task, "contract_valid": False}
         prediction = None
         try:
-            prediction = generate(model, processor, request, images, config)
+            prediction = generate(model, processor, request, images, config, diagnostics=record)
             validate_output(request, prediction)
             record.update(contract_valid=True, prediction=prediction)
         except (ValueError, TypeError) as exc:
