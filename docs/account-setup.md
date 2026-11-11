@@ -18,7 +18,7 @@ No credentials should be pasted into chat, committed to files, or saved in noteb
 4. Locally run `python scripts/prepare_bundle.py notebook` and upload the generated `artifacts/valar-phase0-source.zip` to the notebook when prompted.
 5. Run the setup cells, confirm CUDA in the displayed output, then run base inference. Stop on dependency, memory or masking failures and save the error.
 6. Run the three-step training smoke. Inspect the masking audit; download the adapter zip before disconnecting. This is external persistence on your computer, not local training or serving.
-7. Restart the Colab session. Repeat setup, upload the saved adapter zip in the restore cell, then run the reload smoke. Save result JSON and actual runtime details.
+7. For the restoration gate, disconnect/delete the old runtime and reconnect to a free T4 runtime. Use the latest generated notebook and source ZIP. Repeat only source upload and environment setup, then jump to **Fresh-session restore**. Upload the saved adapter ZIP and paste its SHA-256 when prompted. The cell verifies archive/tensor provenance and runs the image fixture through the restored adapter. Save the result JSON; do not rerun training to recreate a checkpoint that should have been restored.
 
 Notebook installation is isolated from Colab's preinstalled packages. Setup installs a pinned uv bootstrap into `/content/valar-bootstrap`, downloads Python 3.12.12, and creates `/content/valar-env`. The notebook kernel may use a different Python version; every Valar command runs through the managed environment. The checked-in locks still target Linux/Python 3.12. Do not remove the interpreter check from older notebook copies and install the GPU stack into an incompatible Python.
 
