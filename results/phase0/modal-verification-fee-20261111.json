@@ -1,0 +1,18 @@
+{
+  "kind": "owner_supplied_modal_payment_verification_gate",
+  "observed_on": "2026-11-11",
+  "source_image_sha256": "04ee079555197eb72537bcbf80576cc4924283fdc581467b79ec4bea2e8fcd2f",
+  "screen": "Add a default payment method",
+  "displayed_verification_charge_usd": 0.5,
+  "provider_screen_says_refunded": true,
+  "displayed_unlocked_total_credit_usd": 30.0,
+  "displayed_additional_credit_usd": 29.0,
+  "custom_zero_net_spend_cap_verified": false,
+  "payment_or_cloud_resources_activated_by_agent": false,
+  "route_decision": "Excluded under the current strict zero-cash-outlay requirement",
+  "limitations": [
+    "No charge or refund was performed or independently observed",
+    "A refunded verification fee still requires an upfront cash charge",
+    "No GPU workload or spend-limit setting has been verified"
+  ]
+}
