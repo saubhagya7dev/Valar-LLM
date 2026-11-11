@@ -21,7 +21,7 @@ def main():
     parser.add_argument("--output", default="results/runs/base-smoke.json")
     parser.add_argument("--case", action="append", help="Repeat to select bounded smoke cases")
     parser.add_argument("--debug-errors", action="store_true",
-                        help="Print full tracebacks for these synthetic smoke fixtures only")
+                        help="Print tracebacks and save failed outputs for synthetic fixtures only")
     args = parser.parse_args()
     if os.getenv("VALAR_FREE_ONLINE_RUNTIME") != "confirmed":
         raise SystemExit("Use a confirmed free online runtime")
@@ -45,6 +45,7 @@ def main():
         torch.cuda.synchronize()
         start = time.perf_counter()
         record = {"id": case["id"], "task": request.task, "contract_valid": False}
+        prediction = None
         try:
             prediction = generate(model, processor, request, images, config)
             validate_output(request, prediction)
@@ -55,6 +56,11 @@ def main():
             record["failure_location"] = {"file": Path(frame.filename).name,
                                           "function": frame.name, "line": frame.lineno}
             if args.debug_errors:
+                record["failure_message"] = str(exc)
+                if isinstance(exc, json.JSONDecodeError):
+                    record["raw_output"] = exc.doc
+                elif prediction is not None:
+                    record["prediction"] = prediction
                 traceback.print_exc()
         finally:
             torch.cuda.synchronize()
