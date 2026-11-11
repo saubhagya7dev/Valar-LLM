@@ -38,7 +38,7 @@ uv run python scripts/prepare_bundle.py space
 
 Review the generated `artifacts/space` directory before deployment. Hosting requires an eligible free ZeroGPU account, Gradio configuration and private caller credentials. New HF accounts have a documented age requirement; no deployment is assumed. No paid overflow or automatic teacher fallback exists.
 
-The owner has also authorized [investigating Modal](docs/modal-no-spend.md) only if the account can enforce a saved $0 net-spend limit. This condition is not yet verified, and no Modal resources have been activated.
+[Modal investigation](docs/modal-no-spend.md) found a refundable upfront verification charge in the owner's account flow, so that route is excluded under the strict zero-cash-outlay requirement. No Modal resources have been activated. Cloud serving awaits eligible fee-free ZeroGPU access or an approved allocation; Phase 0 is not complete.
 
 ## Repository map
 
