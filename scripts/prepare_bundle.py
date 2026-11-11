@@ -13,6 +13,20 @@ ROOT = Path(__file__).resolve().parents[1]
 def source_files():
     fixed = [ROOT / name for name in ("pyproject.toml", "README.md", "uv.lock")]
     folders = [ROOT / name for name in ("src", "configs", "requirements", "scripts", "tests/fixtures")]
+    pilot = ROOT / "data/pilot/v1"
+    if (pilot / "manifest.json").exists():
+        manifest = json.loads((pilot / "manifest.json").read_text(encoding="utf-8"))
+        names = {"manifest.json", "splits.json", "sources.lock.json", "ATTRIBUTION.md"}
+        names.update(s["file"] for s in manifest["sources"])
+        names.update(a["file"] for a in manifest["assets"])
+        names.update(manifest["license_files"])
+        for name in names:
+            path = (pilot / name).resolve()
+            if not path.is_relative_to(pilot.resolve()):
+                raise ValueError("Pilot bundle path escapes its public dataset")
+            fixed.append(path)
+        fixed.extend(ROOT / name for name in ("docs/labeling/shared.md", "docs/labeling/researcher.md",
+            "docs/labeling/reviewer.md", "docs/labeling/vision.md", "docs/pilot-review.md"))
     return sorted(fixed + [p for folder in folders for p in folder.rglob("*")
                            if p.is_file() and "__pycache__" not in p.parts
                            and p.suffix in {".py", ".json", ".in", ".lock"}])
