@@ -20,7 +20,9 @@ No credentials should be pasted into chat, committed to files, or saved in noteb
 6. Run the three-step training smoke. Inspect the masking audit; download the adapter zip before disconnecting. This is external persistence on your computer, not local training or serving.
 7. Restart the Colab session. Repeat setup, upload the saved adapter zip in the restore cell, then run the reload smoke. Save result JSON and actual runtime details.
 
-Notebook installation is isolated from Colab's preinstalled packages. The checked-in locks target Linux/Python 3.12. If Colab changes interpreter, use a compatible free runtime or regenerate/review the locks; do not silently upgrade pinned GPU packages.
+Notebook installation is isolated from Colab's preinstalled packages. Setup installs a pinned uv bootstrap into `/content/valar-bootstrap`, downloads Python 3.12.12, and creates `/content/valar-env`. The notebook kernel may use a different Python version; every Valar command runs through the managed environment. The checked-in locks still target Linux/Python 3.12. Do not remove the interpreter check from older notebook copies and install the GPU stack into an incompatible Python.
+
+If you see `This lock targets Python 3.12; select a compatible runtime`, you have the earlier notebook. Upload the regenerated notebook and source zip, and re-run the first two setup cells. You can keep the selected free T4 GPU; no runtime-version menu change is needed for the corrected setup. Managed Python installation follows the [official uv guide](https://docs.astral.sh/uv/guides/install-python/).
 
 ## Kaggle alternative
 
