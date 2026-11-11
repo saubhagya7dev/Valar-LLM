@@ -1,0 +1,13 @@
+{
+  "dataset_id": "pilot-dev-v1",
+  "manifest_sha256": "0dc701cc964db024929ca3053acd3387f1cfb9cf2e3d58333206d526826686f9",
+  "items": 24,
+  "distinct_reviewer_ids": 0,
+  "items_with_a_label": 0,
+  "review_actions": {},
+  "primary_label_disagreements": [],
+  "independent_human_gold_verified": false,
+  "agreement_statistic": "not measured",
+  "model_accuracy": "not measured",
+  "training_export_available": false
+}
