@@ -11,8 +11,8 @@ Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint
 | Free account eligibility | Owner reports all accounts created; hosting eligibility not yet verified | Accounts created |
 | Free training GPU | Owner-supplied result confirms model loading on Tesla T4 | Confirmed for this run |
 | Untuned text and image inference | Raw outputs inspected: Vision reads the synthetic image correctly with fenced JSON; researcher and reviewer give incorrect judgments | Mechanics demonstrated; quality failures retained |
-| Tiny online training and masking audit | Owner reports three completed steps, answer-only image masking and saved adapter; checkpoint warnings retained | Ran; artifact verification pending |
-| External checkpoint persistence | Notebook download/restore procedure | Not run |
+| Tiny online training and masking audit | Three steps plus audited saved weights: all 56 intended LoRA-B factors nonzero; warnings retained | Smoke artifact verified |
+| External checkpoint persistence | Downloaded ZIP independently hashed and audited; checksum matches the cloud value | Verified |
 | Fresh-session reload | Separate inference command and manifest checks | Not run |
 | Free cloud hosting | New HF account cannot yet meet age criterion | Blocked on eligibility |
 | Remote adapter text/image request | Prepared Space packager and remote probe | Not run |
@@ -66,3 +66,11 @@ Proceed with the three-step synthetic image training smoke to test masking, memo
 The owner reported exit code 0 and a saved `artifacts/smoke-adapter` after three T4 steps. Losses were 1.0783616304397583, 0.7788828611373901 and 0.5237541198730469. The masking audit reports 526 prompt tokens, 564 total tokens and 38 answer tokens, one image, matching prompt prefix and masked image tokens. Peak allocated memory was 3,420,103,680 bytes (about 3.19 GiB). The supplied summary is preserved verbatim in structured form at `results/phase0/colab-training-smoke-20261111.json`.
 
 The run also emitted checkpointing warnings about `use_reentrant` and inputs without gradients. These warnings are retained; no per-parameter gradient audit was collected, so the declining loss must not be presented as independent proof of correct updates to all intended adapter modules. Download the complete adapter and measurements before disconnecting, verify the saved tensors and manifest, then restore into a fresh session and test image inference. None of the three-role quality or cloud-serving release gates is passed by this training smoke.
+
+## Downloaded checkpoint verification
+
+The adapter ZIP saved outside Colab has SHA-256 `7b63cd6a256cec79bbbcb486cdbae1794210f983aadd4880e00412b269daea13`, matching the owner's cloud checksum. Offline inspection of its contents passed CRC, required-file, base/revision/rank, masking, fixture/prompt hash and exact intended tensor-coverage checks. The manifest confirms Python 3.12.12, the pinned dependency versions and the supplied step metrics.
+
+The saved F32 adapter has 1,605,632 parameters in 112 tensors covering all 56 intended q/v projection modules. Every weight is finite; all 56 LoRA-B factors are nonzero. Because the saved config uses `init_lora_weights=true`, PEFT initializes those B factors to zero; their observed nonzero values provide evidence of actual updates despite the checkpointing warnings. This does not reconstruct per-step gradients or prove generalization. See [the pinned PEFT initialization implementation](https://github.com/huggingface/peft/blob/v0.17.1/src/peft/tuners/lora/layer.py#L236).
+
+Reproduce with `python -m valar_llm.eval.checkpoint <adapter.zip> --expected-sha256 <checksum> --output <new-audit.json>`. This narrow auditor supports the smoke's F32 LoRA format, reads the documented safetensors layout without Torch, and does not execute a model. Evidence is saved in `results/phase0/checkpoint-audit-20261111.json` and its companion manifest. The next unpassed gate is fresh-session restoration followed by the image fixture; use the updated notebook's restore section after source upload and setup, skipping baseline and training.
