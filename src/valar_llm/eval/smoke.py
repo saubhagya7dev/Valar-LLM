@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import time
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -19,6 +20,8 @@ def main():
     parser.add_argument("--adapter")
     parser.add_argument("--output", default="results/runs/base-smoke.json")
     parser.add_argument("--case", action="append", help="Repeat to select bounded smoke cases")
+    parser.add_argument("--debug-errors", action="store_true",
+                        help="Print full tracebacks for these synthetic smoke fixtures only")
     args = parser.parse_args()
     if os.getenv("VALAR_FREE_ONLINE_RUNTIME") != "confirmed":
         raise SystemExit("Use a confirmed free online runtime")
@@ -48,6 +51,11 @@ def main():
             record.update(contract_valid=True, prediction=prediction)
         except (ValueError, TypeError) as exc:
             record["failure_type"] = type(exc).__name__
+            frame = traceback.extract_tb(exc.__traceback__)[-1]
+            record["failure_location"] = {"file": Path(frame.filename).name,
+                                          "function": frame.name, "line": frame.lineno}
+            if args.debug_errors:
+                traceback.print_exc()
         finally:
             torch.cuda.synchronize()
             record["generation_seconds"] = time.perf_counter() - start
@@ -67,6 +75,8 @@ def main():
         "semantic_support": "requires human review",
     }, indent=2) + "\n")
     print(f"Saved {len(records)} real inference attempts to {output}")
+    if not all(record["contract_valid"] for record in records):
+        raise SystemExit("One or more smoke cases failed; inspect the saved results before training")
 
 
 if __name__ == "__main__":
