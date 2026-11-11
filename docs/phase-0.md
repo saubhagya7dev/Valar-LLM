@@ -9,8 +9,8 @@ Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint
 | Inspect application contracts | Read-only source inspection and native schema snapshots | Implemented |
 | Versioned task requests, outputs and fixtures | Three roles plus compact researcher submode; synthetic image pages | Implemented |
 | Free account eligibility | Owner reports all accounts created; hosting eligibility not yet verified | Accounts created |
-| Free training GPU | Colab T4 selected in supplied screenshot; CUDA check has not run | Pending CUDA check |
-| Untuned text and image inference | Runnable smoke command, no GPU measurements | Not run |
+| Free training GPU | Owner-supplied result confirms model loading on Tesla T4 | Confirmed for this run |
+| Untuned text and image inference | First attempt: three preprocessing TypeErrors; boundary fix awaits cloud retry | Failed first attempt |
 | Tiny online training and masking audit | Runnable three-step QLoRA command | Not run |
 | External checkpoint persistence | Notebook download/restore procedure | Not run |
 | Fresh-session reload | Separate inference command and manifest checks | Not run |
@@ -35,4 +35,10 @@ Record failures as failures and choose a new model/route if necessary. Do not co
 
 ## First setup attempt
 
-The owner reported the notebook's host-Python assertion failing before source upload on 11 November 2026. The traceback proves Colab's notebook interpreter was not 3.12; its exact version was not supplied. No training or model download was reached. Setup now provisions its own Python 3.12.12 using pinned uv, leaving the notebook kernel version independent of the GPU dependency lock. The corrected cloud setup still requires a real rerun.
+The owner reported the notebook's host-Python assertion failing before source upload on 11 November 2026. The traceback proves Colab's notebook interpreter was not 3.12; a later traceback identifies the host as Python 3.13. No training or model download was reached at that point. Setup now provisions its own Python 3.12.12 using pinned uv, leaving the notebook kernel version independent of the GPU dependency lock. The owner subsequently confirmed that setup's CLI fixture check exited successfully.
+
+## First base-model inference attempt
+
+The owner subsequently confirmed successful CLI fixture checks in the managed environment and supplied a result file from the T4 at `2026-11-11T10:52:08.976255+00:00`. Model loading took 179.526044222 seconds. All three requested cases recorded immediate `TypeError` failures; there were no valid predictions. The sanitized original report is preserved in `results/phase0/colab-base-smoke-20261111.json`.
+
+Code inspection found plain-string system messages being passed to the multimodal processor. Transformers 4.57.1 scans every message content as typed blocks, producing a TypeError on these strings. The processor boundary now normalizes string content for both inference and training. See [the pinned upstream implementation](https://github.com/huggingface/transformers/blob/v4.57.1/src/transformers/processing_utils.py#L1501). Regression checks cover all three task paths and assistant training text; a corrected Colab inference run is still pending. New notebook attempts use timestamped filenames and expose synthetic-only debug tracebacks. Failed checks now exit unsuccessfully after saving their diagnostics.
