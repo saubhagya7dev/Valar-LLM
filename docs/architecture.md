@@ -37,6 +37,8 @@ Canonical output schemas are packaged under `src/valar_llm/contracts/schemas/`. 
 
 Schema validity, source-quote matching, known evidence IDs and consistent prerequisite states can be checked by code. Whether a quote supports an assertion still requires evaluation and human review. Untrusted instructions remain in evidence, never the system prompt.
 
+The generation boundary accepts strict JSON or one whole-response JSON fence, without changing any data values. Evaluation records raw strict JSON validity separately from normalization and subsequent contract checks. Arbitrary prose, reasoning, multiple fences and malformed JSON remain failures. Passing a normalized schema check never proves that the answer is evidence-supported.
+
 Vision evidence metadata and page images are ordered one-to-one. The serving interface takes uploaded files separately from JSON; it never fetches image URLs or accepts arbitrary local paths from request JSON. Immutable version IDs and page numbers remain in metadata. The application must resolve those references to the correct bytes; the model cannot independently verify the storage mapping.
 
 ## Experiment lifecycle
