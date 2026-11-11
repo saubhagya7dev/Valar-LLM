@@ -31,3 +31,7 @@ Amended after the first reported Colab setup failure: the notebook kernel is not
 Accepted after inspection of owner-supplied synthetic T4 outputs on 11 November 2026. Accept strict JSON or exactly one whole-response JSON fence. Preserve every data value; reject malformed JSON, extra prose and multiple blocks. Record strict JSON validity, normalization and original-output hash separately in smoke results. No historical result is rewritten. This fixes transport formatting for the correctly read image without disguising the researcher and reviewer's wrong judgments.
 
 The next permitted experiment is the already-planned three-step image-training smoke. Its purpose is to validate training and checkpoint mechanics, not to claim improvement on the failed security examples. General model suitability remains provisional.
+
+## ADR 008: Investigate Modal after verified training and restoration
+
+Conditional, 11 November 2026. The owner authorized investigating Modal only with an enforceable $0 cap. Current official docs now describe a workspace net-spend limit separate from usage budgets, but require a payment method. This changes the route from excluded/unverified to an investigation candidate; it does not authorize deployment before account-specific zero-spend controls are confirmed. `docs/modal-no-spend.md` records the evidence and remaining checks. No payment, account or cloud resource has been activated.
