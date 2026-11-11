@@ -1,0 +1,33 @@
+{
+  "kind": "owner_supplied_synthetic_training_smoke_summary",
+  "received_on": "2026-11-11",
+  "exit_code": 0,
+  "reported_adapter_path": "artifacts/smoke-adapter",
+  "steps": [
+    {"step": 1, "loss": 1.0783616304397583, "seconds": 4.039299630000187},
+    {"step": 2, "loss": 0.7788828611373901, "seconds": 2.5711768299997857},
+    {"step": 3, "loss": 0.5237541198730469, "seconds": 2.5846192960002554}
+  ],
+  "mask_audit": {
+    "prompt_tokens": 526,
+    "total_tokens": 564,
+    "answer_tokens": 38,
+    "image_count": 1,
+    "has_pixel_values": true,
+    "prefix_match": true,
+    "image_tokens_masked": true
+  },
+  "gpu": "Tesla T4",
+  "peak_allocated_bytes": 3420103680,
+  "reported_warnings": [
+    "torch_dtype is deprecated; use dtype instead",
+    "torch.utils.checkpoint use_reentrant should be passed explicitly",
+    "None of the inputs have requires_grad=True. Gradients will be None"
+  ],
+  "limitations": [
+    "Summary supplied by the owner; full checkpoint and manifest not inspected locally",
+    "Per-parameter gradients and adapter weight changes were not recorded in this run",
+    "External persistence, fresh-session reload and post-training inference remain unverified",
+    "Three steps on one synthetic example are mechanics evidence, not held-out quality evidence"
+  ]
+}
