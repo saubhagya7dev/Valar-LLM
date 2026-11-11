@@ -1,8 +1,8 @@
 # Phase 0 feasibility gate
 
-Status: **in progress — offline checks passed; online gate not passed**.
+Status: **in progress — online training, external persistence and fresh-session restore verified; cloud-serving gate pending**.
 
-Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint and fixture-check command outputs. Core checks ran on Windows/Python 3.14. Owner-supplied Colab output now confirms managed Python setup, T4 generation and completion of a three-step training command; checkpoint persistence/reload and remote serving remain unverified. The wheel and source distribution were also built successfully. These results establish software scaffolding and limited mechanics, not general model quality.
+Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint and fixture-check command outputs. Core checks ran on Windows/Python 3.14. Owner-supplied Colab output confirms managed Python setup, T4 generation, a three-step training command, downloaded checkpoint verification and fresh-session image inference using the same adapter manifest. Public cloud serving remains unverified. The wheel and source distribution were also built successfully. These results establish limited mechanics, not general model quality.
 
 | Gate | Current evidence | State |
 | --- | --- | --- |
@@ -13,11 +13,11 @@ Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint
 | Untuned text and image inference | Raw outputs inspected: Vision reads the synthetic image correctly with fenced JSON; researcher and reviewer give incorrect judgments | Mechanics demonstrated; quality failures retained |
 | Tiny online training and masking audit | Three steps plus audited saved weights: all 56 intended LoRA-B factors nonzero; warnings retained | Smoke artifact verified |
 | External checkpoint persistence | Downloaded ZIP independently hashed and audited; checksum matches the cloud value | Verified |
-| Fresh-session reload | Separate inference command and manifest checks | Not run |
-| Free cloud hosting | New HF account cannot yet meet age criterion | Blocked on eligibility |
+| Fresh-session reload | Owner followed fresh-session procedure; matching adapter manifest, valid cited image answer | Verified for the smoke fixture |
+| Free cloud hosting | HF account-age blocker; owner authorized investigation of Modal only with a verified $0 net-spend cap | Pending hosting/account controls |
 | Remote adapter text/image request | Prepared Space packager and remote probe | Not run |
 | Laptop-independent operation | Cloud probe procedure | Not run |
-| Cold/queue/warm latency, memory, quota | Result formats prepared; no values invented | Unmeasured |
+| Cold/queue/warm latency, memory, quota | Colab load/generation and training allocation recorded; public serving queue/quota unmeasured | Partial measurements only |
 
 The first online cycle checks mechanics, not quality. A tiny synthetic adapter does not satisfy any role's release-quality gate. No production endpoint or complete application replacement is claimed.
 
@@ -74,3 +74,11 @@ The adapter ZIP saved outside Colab has SHA-256 `7b63cd6a256cec79bbbcb486cdbae17
 The saved F32 adapter has 1,605,632 parameters in 112 tensors covering all 56 intended q/v projection modules. Every weight is finite; all 56 LoRA-B factors are nonzero. Because the saved config uses `init_lora_weights=true`, PEFT initializes those B factors to zero; their observed nonzero values provide evidence of actual updates despite the checkpointing warnings. This does not reconstruct per-step gradients or prove generalization. See [the pinned PEFT initialization implementation](https://github.com/huggingface/peft/blob/v0.17.1/src/peft/tuners/lora/layer.py#L236).
 
 Reproduce with `python -m valar_llm.eval.checkpoint <adapter.zip> --expected-sha256 <checksum> --output <new-audit.json>`. This narrow auditor supports the smoke's F32 LoRA format, reads the documented safetensors layout without Torch, and does not execute a model. Evidence is saved in `results/phase0/checkpoint-audit-20261111.json` and its companion manifest. The next unpassed gate is fresh-session restoration followed by the image fixture; use the updated notebook's restore section after source upload and setup, skipping baseline and training.
+
+## Fresh-session restore result
+
+The owner supplied the completed fresh-session procedure output at `2026-11-11T11:46:35.591066+00:00`, saved in `results/phase0/colab-fresh-restore-20261111.json`. The upload's ZIP checksum and 112-tensor audit passed again. The inference report's adapter manifest hash is `6f3220efd7730f6f779df11a6e0b9be7fe03659511251bf956ff430b8d3dff48`, exactly matching the independent downloaded-checkpoint audit.
+
+On Tesla T4, base/adapter load took 66.433741213 seconds and the single image generation took 14.839639314 seconds. The restored adapter returned 2025 revenue of 42 USD millions with citation `V1:P1`. This passes the supplied-evidence contract and agrees with the synthetic image. The response still required a single JSON fence to be removed, recorded as `strict_json_valid=false` and `output_normalization=single_json_fence`.
+
+Training, saving, external persistence, checkpoint identity and fresh-session image inference have now been demonstrated for this tiny smoke. The same image was used for training and the untuned base already answered it correctly, so this is not evidence of held-out improvement or teacher parity. The remaining Phase 0 gate is a verified no-spend cloud-serving route and laptop-independent remote calls. Modal investigation is authorized only if the account can enforce $0 net spend; see `docs/modal-no-spend.md`.
