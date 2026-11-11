@@ -14,7 +14,7 @@ Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint
 | Tiny online training and masking audit | Three steps plus audited saved weights: all 56 intended LoRA-B factors nonzero; warnings retained | Smoke artifact verified |
 | External checkpoint persistence | Downloaded ZIP independently hashed and audited; checksum matches the cloud value | Verified |
 | Fresh-session reload | Owner followed fresh-session procedure; matching adapter manifest, valid cited image answer | Verified for the smoke fixture |
-| Free cloud hosting | HF account-age blocker; owner authorized investigation of Modal only with a verified $0 net-spend cap | Pending hosting/account controls |
+| Free cloud hosting | HF account-age blocker; Modal overview shows only $1 credit/$1 usage allowance, with net-spend cap and GPU access unverified | Pending hosting/account controls |
 | Remote adapter text/image request | Prepared Space packager and remote probe | Not run |
 | Laptop-independent operation | Cloud probe procedure | Not run |
 | Cold/queue/warm latency, memory, quota | Colab load/generation and training allocation recorded; public serving queue/quota unmeasured | Partial measurements only |
