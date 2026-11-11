@@ -19,7 +19,7 @@ markdown("""# Valar LLM — Phase 0 free online smoke
 Synthetic examples only; this is not a quality benchmark. Choose a **free GPU runtime** manually.
 No paid resources, teacher API calls, automatic Hub upload, or public serving from Colab.
 Run `python scripts/prepare_bundle.py notebook` on the development machine and upload its source zip below.
-The notebook installs a separate environment targeting Python 3.12; it fails visibly on a different interpreter.
+The notebook installs its own Python 3.12.12 environment, independently of Colab's notebook interpreter.
 """)
 code("""import pathlib
 import sys
@@ -27,7 +27,7 @@ import zipfile
 
 from google.colab import files
 
-assert sys.version_info[:2] == (3, 12), 'This lock targets Python 3.12; select a compatible runtime.'
+print('Colab notebook Python:', sys.version.split()[0])
 uploaded = files.upload()
 assert 'valar-phase0-source.zip' in uploaded, 'Upload the prepared source bundle.'
 root = pathlib.Path('/content/valar-phase0')
@@ -42,11 +42,21 @@ with zipfile.ZipFile('valar-phase0-source.zip') as archive:
 code("""import os
 import subprocess
 
-subprocess.run([sys.executable, '-m', 'venv', '/content/valar-env'], check=True)
+# Keep bootstrap tooling separate from Colab's preinstalled Python packages.
+bootstrap = '/content/valar-bootstrap'
+subprocess.run([sys.executable, '-m', 'pip', 'install', '--quiet', '--target', bootstrap,
+                'uv==0.11.7'], check=True)
+runner_env = dict(os.environ, PYTHONPATH=bootstrap)
+uv = [sys.executable, '-m', 'uv']
+subprocess.run(uv + ['python', 'install', '3.12.12'], env=runner_env, check=True)
+subprocess.run(uv + ['venv', '--python', '3.12.12', '/content/valar-env'],
+               env=runner_env, check=True)
 python = '/content/valar-env/bin/python'
-subprocess.run([python, '-m', 'pip', 'install', '-r', 'requirements/gpu.lock'], check=True)
-subprocess.run([python, '-m', 'pip', 'install', '--no-deps', '-e', '.'], check=True)
-subprocess.run([python, '-c', 'import torch; assert torch.cuda.is_available(); print(torch.cuda.get_device_name())'], check=True)
+subprocess.run(uv + ['pip', 'install', '--python', python, '-r', 'requirements/gpu.lock'],
+               env=runner_env, check=True)
+subprocess.run(uv + ['pip', 'install', '--python', python, '--no-deps', '-e', '.'],
+               env=runner_env, check=True)
+subprocess.run([python, '-c', 'import sys, torch; print("Valar Python:", sys.version); assert torch.cuda.is_available(); print(torch.cuda.get_device_name())'], check=True)
 os.environ['VALAR_FREE_ONLINE_RUNTIME'] = 'confirmed'
 subprocess.run([python, '-m', 'valar_llm.cli', 'check'], check=True)
 """)
