@@ -1,0 +1,21 @@
+{
+  "dataset_id": "pilot-dev-v1",
+  "manifest_sha256": "0dc701cc964db024929ca3053acd3387f1cfb9cf2e3d58333206d526826686f9",
+  "items": 24,
+  "families": 8,
+  "by_task": {
+    "researcher.compact": 4,
+    "researcher": 4,
+    "reviewer": 8,
+    "vision.answer": 8
+  },
+  "partitions": {
+    "development": 24,
+    "train": 0,
+    "test": 0
+  },
+  "human_labels_in_manifest": 0,
+  "near_duplicate_warnings": [],
+  "model_executed": false,
+  "training_export_available": false
+}
