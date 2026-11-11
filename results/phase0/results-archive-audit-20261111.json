@@ -1,0 +1,27 @@
+{
+  "kind": "downloaded_results_archive_audit",
+  "archive_sha256": "90177a7bbe1bc15ca52a40ccce96bfdaa63aacd1439f86de21e2ef0e45eebd99",
+  "crc_valid": true,
+  "files": [
+    {
+      "file": "base-retry-1794394832087998561.json",
+      "sha256": "d99907c2a26921c09a2a6eebab36ad66eaf0a9214b251d075b0d5bd804be79c5",
+      "kind": "synthetic_inference_smoke_not_quality_evaluation",
+      "record_count": 3,
+      "matches_previously_supplied_report": true
+    },
+    {
+      "file": "base-smoke.json",
+      "sha256": "aca5a1efc0ac69a456dea87de164850c5fcd6b066531c66779565426de945bb9",
+      "kind": "synthetic_inference_smoke_not_quality_evaluation",
+      "record_count": 3,
+      "matches_previously_supplied_report": true
+    },
+    {
+      "file": "diagnostic-1794395444200285591.json",
+      "sha256": "5628e223d2cb58e50be3fd1c14d8cda419db73673f64a88831dce7cd98926d94",
+      "kind": "synthetic_inference_smoke_not_quality_evaluation",
+      "record_count": 3
+    }
+  ]
+}
