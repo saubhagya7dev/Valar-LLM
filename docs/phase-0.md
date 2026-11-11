@@ -2,7 +2,7 @@
 
 Status: **in progress — offline checks passed; online gate not passed**.
 
-Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint and fixture-check command outputs. Core checks ran on Windows/Python 3.14. Owner-supplied Colab output now confirms managed Python setup and T4 generation; training and remote serving are still unrun gates. The wheel and source distribution were also built successfully. These results establish software scaffolding and limited inference mechanics, not general model quality.
+Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint and fixture-check command outputs. Core checks ran on Windows/Python 3.14. Owner-supplied Colab output now confirms managed Python setup, T4 generation and completion of a three-step training command; checkpoint persistence/reload and remote serving remain unverified. The wheel and source distribution were also built successfully. These results establish software scaffolding and limited mechanics, not general model quality.
 
 | Gate | Current evidence | State |
 | --- | --- | --- |
@@ -11,7 +11,7 @@ Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint
 | Free account eligibility | Owner reports all accounts created; hosting eligibility not yet verified | Accounts created |
 | Free training GPU | Owner-supplied result confirms model loading on Tesla T4 | Confirmed for this run |
 | Untuned text and image inference | Raw outputs inspected: Vision reads the synthetic image correctly with fenced JSON; researcher and reviewer give incorrect judgments | Mechanics demonstrated; quality failures retained |
-| Tiny online training and masking audit | Runnable three-step QLoRA command | Not run |
+| Tiny online training and masking audit | Owner reports three completed steps, answer-only image masking and saved adapter; checkpoint warnings retained | Ran; artifact verification pending |
 | External checkpoint persistence | Notebook download/restore procedure | Not run |
 | Fresh-session reload | Separate inference command and manifest checks | Not run |
 | Free cloud hosting | New HF account cannot yet meet age criterion | Blocked on eligibility |
@@ -60,3 +60,9 @@ The targeted diagnostic supplied by the owner is preserved in `results/phase0/co
 The runtime now permits only a single complete JSON fence as bounded formatting normalization. Smoke records separately retain `strict_json_valid`, `output_normalization` and a hash of the original decoded text. No prose extraction, field repair or factual rewriting is performed. Prior strict-parser failures remain unchanged in their original result files.
 
 Proceed with the three-step synthetic image training smoke to test masking, memory, adapter saving and restoration. The untuned model does not need to pass security-release quality thresholds before testing the training mechanics. This does not authorize larger training runs or application replacement; its security quality failures remain unresolved. The current Colab source already contains the processor fix needed for training, so this step does not require reinstalling or another source upload.
+
+## First online training smoke
+
+The owner reported exit code 0 and a saved `artifacts/smoke-adapter` after three T4 steps. Losses were 1.0783616304397583, 0.7788828611373901 and 0.5237541198730469. The masking audit reports 526 prompt tokens, 564 total tokens and 38 answer tokens, one image, matching prompt prefix and masked image tokens. Peak allocated memory was 3,420,103,680 bytes (about 3.19 GiB). The supplied summary is preserved verbatim in structured form at `results/phase0/colab-training-smoke-20261111.json`.
+
+The run also emitted checkpointing warnings about `use_reentrant` and inputs without gradients. These warnings are retained; no per-parameter gradient audit was collected, so the declining loss must not be presented as independent proof of correct updates to all intended adapter modules. Download the complete adapter and measurements before disconnecting, verify the saved tensors and manifest, then restore into a fresh session and test image inference. None of the three-role quality or cloud-serving release gates is passed by this training smoke.
