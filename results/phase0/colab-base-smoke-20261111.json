@@ -1,0 +1,53 @@
+{
+  "kind": "synthetic_inference_smoke_not_quality_evaluation",
+  "created_at": "2026-11-11T10:52:08.976255+00:00",
+  "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+  "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+  "config": {
+    "schema_version": "1",
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "license": "Apache-2.0",
+    "status": "provisional_not_runtime_validated",
+    "seed": 42,
+    "max_input_tokens": 4096,
+    "max_new_tokens": 768,
+    "max_images": 2,
+    "max_image_pixels": 1048576,
+    "processor_max_pixels": 262144,
+    "max_request_bytes": 64000,
+    "training_steps": 3,
+    "lora_rank": 8,
+    "learning_rate": 0.0001,
+    "daily_request_limit": 12,
+    "gpu_duration_seconds": 60
+  },
+  "adapter_manifest_sha256": null,
+  "process_id": 9457,
+  "load_seconds": 179.5260442220001,
+  "gpu": "Tesla T4",
+  "records": [
+    {
+      "id": "compact-advisory",
+      "task": "researcher.compact",
+      "contract_valid": false,
+      "failure_type": "TypeError",
+      "generation_seconds": 0.002176491000227543
+    },
+    {
+      "id": "review-unknown",
+      "task": "reviewer",
+      "contract_valid": false,
+      "failure_type": "TypeError",
+      "generation_seconds": 0.00044703000003210036
+    },
+    {
+      "id": "vision-image",
+      "task": "vision.answer",
+      "contract_valid": false,
+      "failure_type": "TypeError",
+      "generation_seconds": 0.0004081779998159618
+    }
+  ],
+  "semantic_support": "requires human review"
+}
