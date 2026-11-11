@@ -1,0 +1,16 @@
+{
+  "kind": "owner_supplied_modal_billing_overview",
+  "observed_on": "2026-11-11",
+  "source_image_sha256": "c4d345590b241fb5fead4e7f7ce44172e7e4c265a1c912a3a213f5b8fe65f2e4",
+  "plan": "Starter",
+  "included_compute_credit_per_month_usd": 1.0,
+  "displayed_usage_limit_usd": 1.0,
+  "usage_limit_set_by": "Modal",
+  "displayed_total_spend_usd": 0.0,
+  "billing_cycle": "2026-11-01/2026-11-30",
+  "payment_method_prompt": "Add a payment method to raise this limit",
+  "custom_net_spend_limit_usd": null,
+  "custom_zero_net_spend_cap_verified": false,
+  "gpu_access_verified": false,
+  "note": "Overview screenshot only. A zero total spent is not proof of a zero net-spend cap. Use this account allocation rather than assuming advertised monthly credit."
+}
