@@ -1,0 +1,44 @@
+{
+  "observation_variants": [
+    [
+      {
+        "id": "E1",
+        "claim": "The dependency declaration pins Jinja2.",
+        "path": "requirements.txt",
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "Jinja2==3.1.5",
+        "kind": "observed"
+      },
+      {
+        "id": "E2",
+        "claim": "Template source comes from a submitted form field.",
+        "path": "render.py",
+        "start_line": 1,
+        "end_line": 2,
+        "quote": "template = sandbox.from_string(request.form['template'])\nreturn template.render()",
+        "kind": "observed"
+      }
+    ],
+    [
+      {
+        "id": "E1",
+        "claim": "The dependency declaration pins Jinja2.",
+        "path": "requirements.txt",
+        "start_line": 1,
+        "end_line": 1,
+        "quote": "Jinja2==3.1.5",
+        "kind": "observed"
+      },
+      {
+        "id": "E2",
+        "claim": "The supplied template source is a literal; form input supplies a value.",
+        "path": "render.py",
+        "start_line": 1,
+        "end_line": 2,
+        "quote": "template = sandbox.from_string('Hello {{ name }}')\nreturn template.render(name=request.form['name'])",
+        "kind": "observed"
+      }
+    ]
+  ]
+}
