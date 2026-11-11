@@ -8,8 +8,8 @@ Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint
 | --- | --- | --- |
 | Inspect application contracts | Read-only source inspection and native schema snapshots | Implemented |
 | Versioned task requests, outputs and fixtures | Three roles plus compact researcher submode; synthetic image pages | Implemented |
-| Free account eligibility | Owner reported no configured accounts | Pending setup |
-| Free training GPU | Colab/Kaggle accelerator not checked in account | Pending |
+| Free account eligibility | Owner reports all accounts created; hosting eligibility not yet verified | Accounts created |
+| Free training GPU | Colab T4 selected in supplied screenshot; CUDA check has not run | Pending CUDA check |
 | Untuned text and image inference | Runnable smoke command, no GPU measurements | Not run |
 | Tiny online training and masking audit | Runnable three-step QLoRA command | Not run |
 | External checkpoint persistence | Notebook download/restore procedure | Not run |
@@ -32,3 +32,7 @@ The first online cycle checks mechanics, not quality. A tiny synthetic adapter d
 7. Run the same remote probe from Colab, then verify a request from another client with the laptop off. Preserve real timestamps and outputs.
 
 Record failures as failures and choose a new model/route if necessary. Do not collect a large dataset before this gate passes.
+
+## First setup attempt
+
+The owner reported the notebook's host-Python assertion failing before source upload on 11 November 2026. The traceback proves Colab's notebook interpreter was not 3.12; its exact version was not supplied. No training or model download was reached. Setup now provisions its own Python 3.12.12 using pinned uv, leaving the notebook kernel version independent of the GPU dependency lock. The corrected cloud setup still requires a real rerun.
