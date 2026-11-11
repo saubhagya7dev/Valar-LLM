@@ -62,9 +62,17 @@ subprocess.run([python, '-m', 'valar_llm.cli', 'check'], check=True)
 """)
 markdown("""## Untuned baseline smoke
 This makes three bounded real inference attempts (research, review, image answer). Read the saved predictions; valid JSON alone is not correctness. Stop and preserve failures if the model does not fit.
+Each retry uses a new timestamped result file. Debug tracebacks are enabled only for these synthetic fixtures.
 """)
-code("""subprocess.run([python, '-m', 'valar_llm.eval.smoke', '--output', 'results/runs/base-smoke.json'], check=True)
-print(pathlib.Path('results/runs/base-smoke.json').read_text())
+code("""from datetime import datetime, timezone
+
+baseline_output = 'results/runs/base-smoke-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ') + '.json'
+result = subprocess.run([python, '-m', 'valar_llm.eval.smoke', '--output', baseline_output,
+                         '--debug-errors'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+print(result.stdout[-20000:])
+if pathlib.Path(baseline_output).exists():
+    print(pathlib.Path(baseline_output).read_text())
+result.check_returncode()
 """)
 markdown("""## Tiny image training smoke
 Three steps on one synthetic image. The command verifies exact prompt-prefix masking, image tensors and nonempty answer loss. Training and re-evaluating this example measures mechanics only.
