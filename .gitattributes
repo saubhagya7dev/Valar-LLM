@@ -1,0 +1,6 @@
+# Preserve exact source snapshot bytes used in provenance hashes.
+data/pilot/** text eol=lf
+data/pilot/**/sources/** -text
+data/pilot/**/*.png binary
+docs/labeling/** text eol=lf
+schemas/pilot-*.json text eol=lf
