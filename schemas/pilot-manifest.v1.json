@@ -1,0 +1,295 @@
+{
+  "$defs": {
+    "PageLink": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "asset_id": {
+          "title": "Asset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "asset_id"
+      ],
+      "title": "PageLink",
+      "type": "object"
+    },
+    "PilotAsset": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "family": {
+          "title": "Family",
+          "type": "string"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "pixel_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Pixel Sha256",
+          "type": "string"
+        },
+        "version_id": {
+          "title": "Version Id",
+          "type": "string"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "preprocessing": {
+          "title": "Preprocessing",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "family",
+        "source_id",
+        "file",
+        "sha256",
+        "pixel_sha256",
+        "version_id",
+        "page",
+        "preprocessing"
+      ],
+      "title": "PilotAsset",
+      "type": "object"
+    },
+    "PilotItem": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^P[0-9]{3}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "family": {
+          "title": "Family",
+          "type": "string"
+        },
+        "split": {
+          "const": "development",
+          "title": "Split",
+          "type": "string"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "request": {
+          "additionalProperties": true,
+          "title": "Request",
+          "type": "object"
+        },
+        "page_images": {
+          "items": {
+            "$ref": "#/$defs/PageLink"
+          },
+          "title": "Page Images",
+          "type": "array"
+        },
+        "coverage_tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Coverage Tags",
+          "type": "array"
+        },
+        "transformation": {
+          "title": "Transformation",
+          "type": "string"
+        },
+        "review_state": {
+          "const": "unlabeled",
+          "default": "unlabeled",
+          "title": "Review State",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "family",
+        "split",
+        "source_ids",
+        "request",
+        "coverage_tags",
+        "transformation",
+        "sha256"
+      ],
+      "title": "PilotItem",
+      "type": "object"
+    },
+    "PilotSource": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "family": {
+          "title": "Family",
+          "type": "string"
+        },
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "license": {
+          "enum": [
+            "CC-BY-4.0",
+            "CC0-1.0"
+          ],
+          "title": "License",
+          "type": "string"
+        },
+        "attribution": {
+          "minLength": 1,
+          "title": "Attribution",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "license_url": {
+          "title": "License Url",
+          "type": "string"
+        },
+        "revision": {
+          "title": "Revision",
+          "type": "string"
+        },
+        "transformation": {
+          "title": "Transformation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "family",
+        "file",
+        "sha256",
+        "license",
+        "attribution",
+        "url",
+        "license_url",
+        "revision",
+        "transformation"
+      ],
+      "title": "PilotSource",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "dataset_id": {
+      "const": "pilot-dev-v1",
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "purpose": {
+      "const": "development_only_no_training_export",
+      "title": "Purpose",
+      "type": "string"
+    },
+    "created_on": {
+      "title": "Created On",
+      "type": "string"
+    },
+    "guideline_version": {
+      "const": "1",
+      "title": "Guideline Version",
+      "type": "string"
+    },
+    "family_splits": {
+      "additionalProperties": {
+        "const": "development",
+        "type": "string"
+      },
+      "title": "Family Splits",
+      "type": "object"
+    },
+    "license_files": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "License Files",
+      "type": "object"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/PilotSource"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "assets": {
+      "items": {
+        "$ref": "#/$defs/PilotAsset"
+      },
+      "title": "Assets",
+      "type": "array"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/PilotItem"
+      },
+      "title": "Items",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "purpose",
+    "created_on",
+    "guideline_version",
+    "family_splits",
+    "license_files",
+    "sources",
+    "assets",
+    "items"
+  ],
+  "title": "PilotManifest",
+  "type": "object"
+}
