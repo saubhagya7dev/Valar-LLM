@@ -16,7 +16,7 @@ def test_failed_smoke_saves_redacted_diagnostics_and_returns_failure(monkeypatch
     monkeypatch.setitem(sys.modules, "torch", torch)
     monkeypatch.setattr(smoke, "load_model", lambda *a, **kw: (None, None))
 
-    def broken_generation(*args):
+    def broken_generation(*args, **kwargs):
         raise TypeError("private source content must not be logged by default")
 
     monkeypatch.setattr(smoke, "generate", broken_generation)
@@ -47,7 +47,7 @@ def test_unparseable_output_is_preserved_only_for_explicit_synthetic_debug(
     monkeypatch.setattr(smoke, "load_model", lambda *a, **kw: (None, None))
     raw = '```json\n{"k":2,"m":"test","p":"unknown"}\n```'
 
-    def invalid_json(*args):
+    def invalid_json(*args, **kwargs):
         return json.loads(raw)
 
     monkeypatch.setattr(smoke, "generate", invalid_json)
@@ -72,7 +72,7 @@ def test_synthetic_debug_preserves_candidate_rejected_by_evidence_checks(monkeyp
     monkeypatch.setitem(sys.modules, "torch", torch)
     monkeypatch.setattr(smoke, "load_model", lambda *a, **kw: (None, None))
     candidate = {"summary": "Unsupported model response"}
-    monkeypatch.setattr(smoke, "generate", lambda *args: candidate)
+    monkeypatch.setattr(smoke, "generate", lambda *args, **kwargs: candidate)
     with pytest.raises(SystemExit):
         smoke.main()
     record = json.loads(output.read_text())["records"][0]
