@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "REVIEW",
+  "type": "object",
+  "properties": {
+    "summary": {
+      "type": "string"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "classification": {
+            "type": "string",
+            "enum": [
+              "Supported concern",
+              "Needs verification",
+              "Background lesson"
+            ]
+          },
+          "impact": {
+            "type": "string",
+            "enum": [
+              "High",
+              "Medium",
+              "Low"
+            ]
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "High",
+              "Medium",
+              "Low"
+            ]
+          },
+          "incident_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mechanism": {
+            "type": "string"
+          },
+          "prerequisite": {
+            "type": "string"
+          },
+          "reasoning": {
+            "type": "string"
+          },
+          "counterevidence": {
+            "type": "string"
+          },
+          "missing_information": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "prerequisite_assessments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "prerequisite": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "supported",
+                    "contradicted",
+                    "unknown"
+                  ]
+                },
+                "evidence_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "incident_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "prerequisite",
+                "state",
+                "evidence_ids",
+                "incident_ids",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "action": {
+            "type": "string"
+          },
+          "verification": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "classification",
+          "impact",
+          "confidence",
+          "incident_ids",
+          "evidence_ids",
+          "mechanism",
+          "prerequisite",
+          "reasoning",
+          "counterevidence",
+          "missing_information",
+          "prerequisite_assessments",
+          "action",
+          "verification"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "existing_defenses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "description",
+          "evidence_ids"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rejected_matches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "incident_id": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "incident_id",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "followup_requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "enum": [
+              "analyst",
+              "researcher"
+            ]
+          },
+          "question": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "question"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "summary",
+    "findings",
+    "existing_defenses",
+    "rejected_matches",
+    "questions",
+    "followup_requests"
+  ],
+  "additionalProperties": false
+}
