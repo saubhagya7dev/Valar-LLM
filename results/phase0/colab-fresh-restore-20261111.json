@@ -1,0 +1,52 @@
+{
+  "kind": "synthetic_inference_smoke_not_quality_evaluation",
+  "created_at": "2026-11-11T11:46:35.591066+00:00",
+  "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+  "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+  "config": {
+    "schema_version": "1",
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "license": "Apache-2.0",
+    "status": "provisional_not_runtime_validated",
+    "seed": 42,
+    "max_input_tokens": 4096,
+    "max_new_tokens": 768,
+    "max_images": 2,
+    "max_image_pixels": 1048576,
+    "processor_max_pixels": 262144,
+    "max_request_bytes": 64000,
+    "training_steps": 3,
+    "lora_rank": 8,
+    "learning_rate": 0.0001,
+    "daily_request_limit": 12,
+    "gpu_duration_seconds": 60
+  },
+  "adapter_manifest_sha256": "6f3220efd7730f6f779df11a6e0b9be7fe03659511251bf956ff430b8d3dff48",
+  "process_id": 1639,
+  "load_seconds": 66.43374121300002,
+  "gpu": "Tesla T4",
+  "records": [
+    {
+      "id": "vision-image",
+      "task": "vision.answer",
+      "contract_valid": true,
+      "strict_json_valid": false,
+      "output_normalization": "single_json_fence",
+      "raw_output_sha256": "6f988c9497d7ec59b71191a82283a6a9beed1e85e0262cf3260683b052f251ab",
+      "prediction": {
+        "status": "supported",
+        "claims": [
+          {
+            "text": "2025 revenue was 42 USD millions.",
+            "citations": [
+              "V1:P1"
+            ]
+          }
+        ]
+      },
+      "generation_seconds": 14.83963931400001
+    }
+  ],
+  "semantic_support": "requires human review"
+}
