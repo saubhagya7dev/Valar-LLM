@@ -2,7 +2,7 @@
 
 Evidence-grounded model adaptation for **DevSecOps Incident Researcher**, **DevSecOps Security Reviewer**, and **Vision grounded answers**.
 
-**Status: Phase 0 scaffolding. No online training, cloud deployment or model-quality result yet.** The project targets zero out-of-pocket cost, free online training and cloud inference independent of the owner's laptop.
+**Status: Phase 0 training/save/restore smoke verified on free Colab; public cloud serving remains pending.** The saved adapter passed an independent tensor audit and fresh-session image inference. This is one synthetic training example, not evidence of general model quality. The project targets zero out-of-pocket cost, free online training and cloud inference independent of the owner's laptop.
 
 Start with [the Phase 0 checklist](docs/phase-0.md), [architecture](docs/architecture.md), [account setup](docs/account-setup.md) and the [build plan](Valar%20LLM%20Build%20Plan.md).
 
@@ -37,6 +37,8 @@ uv run python scripts/prepare_bundle.py space
 ```
 
 Review the generated `artifacts/space` directory before deployment. Hosting requires an eligible free ZeroGPU account, Gradio configuration and private caller credentials. New HF accounts have a documented age requirement; no deployment is assumed. No paid overflow or automatic teacher fallback exists.
+
+The owner has also authorized [investigating Modal](docs/modal-no-spend.md) only if the account can enforce a saved $0 net-spend limit. This condition is not yet verified, and no Modal resources have been activated.
 
 ## Repository map
 
