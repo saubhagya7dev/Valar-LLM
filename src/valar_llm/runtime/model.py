@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+from .output import parse_output
 from .prompts import messages_for
 
 
@@ -53,7 +54,7 @@ def encode(processor, messages, max_tokens, *, generation=True):
     return batch
 
 
-def generate(model, processor, request, images, config):
+def generate(model, processor, request, images, config, *, diagnostics=None):
     import torch
 
     batch = encode(processor, messages_for(request, images), config["max_input_tokens"])
@@ -62,5 +63,6 @@ def generate(model, processor, request, images, config):
     with torch.inference_mode():
         output = model.generate(**batch, max_new_tokens=config["max_new_tokens"], do_sample=False)
     text = processor.decode(output[0][batch["input_ids"].shape[-1]:], skip_special_tokens=True)
-    # Invalid output is a recorded failure, never repaired into a fabricated success.
-    return json.loads(text)
+    # Exact fences are formatting only; no response fields or facts are repaired.
+    # The smoke runner records raw JSON validity separately from normalized validity.
+    return parse_output(text, diagnostics)
