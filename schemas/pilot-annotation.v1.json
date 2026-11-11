@@ -1,0 +1,407 @@
+{
+  "$defs": {
+    "ClaimLabel": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "citations": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 12,
+          "minItems": 1,
+          "title": "Citations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "text",
+        "citations"
+      ],
+      "title": "ClaimLabel",
+      "type": "object"
+    },
+    "DefenseLabel": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "description",
+        "evidence_ids"
+      ],
+      "title": "DefenseLabel",
+      "type": "object"
+    },
+    "PrerequisiteLabel": {
+      "additionalProperties": false,
+      "properties": {
+        "prerequisite": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Prerequisite",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "supported",
+            "contradicted",
+            "unknown"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "incident_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Incident Ids",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "prerequisite",
+        "state",
+        "evidence_ids",
+        "incident_ids",
+        "reason"
+      ],
+      "title": "PrerequisiteLabel",
+      "type": "object"
+    },
+    "ResearchLabel": {
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "const": "researcher",
+          "title": "Role",
+          "type": "string"
+        },
+        "record_type": {
+          "enum": [
+            "observed_attack",
+            "vulnerability_advisory",
+            "background_guidance",
+            "insufficient_evidence"
+          ],
+          "title": "Record Type",
+          "type": "string"
+        },
+        "mechanism": {
+          "maxLength": 1000,
+          "title": "Mechanism",
+          "type": "string"
+        },
+        "prerequisites": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 6,
+          "title": "Prerequisites",
+          "type": "array"
+        },
+        "supporting_quotes": {
+          "items": {
+            "$ref": "#/$defs/SupportQuote"
+          },
+          "maxItems": 6,
+          "title": "Supporting Quotes",
+          "type": "array"
+        },
+        "unknowns": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Unknowns",
+          "type": "array"
+        }
+      },
+      "required": [
+        "role",
+        "record_type",
+        "mechanism",
+        "prerequisites",
+        "supporting_quotes",
+        "unknowns"
+      ],
+      "title": "ResearchLabel",
+      "type": "object"
+    },
+    "ReviewerLabel": {
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "const": "reviewer",
+          "title": "Role",
+          "type": "string"
+        },
+        "disposition": {
+          "enum": [
+            "supported_concern",
+            "needs_verification",
+            "background_lesson",
+            "reject_match",
+            "insufficient_context"
+          ],
+          "title": "Disposition",
+          "type": "string"
+        },
+        "prerequisite_assessments": {
+          "items": {
+            "$ref": "#/$defs/PrerequisiteLabel"
+          },
+          "maxItems": 8,
+          "title": "Prerequisite Assessments",
+          "type": "array"
+        },
+        "existing_defenses": {
+          "items": {
+            "$ref": "#/$defs/DefenseLabel"
+          },
+          "maxItems": 8,
+          "title": "Existing Defenses",
+          "type": "array"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "incident_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Incident Ids",
+          "type": "array"
+        },
+        "missing_information": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Missing Information",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "disposition",
+        "prerequisite_assessments",
+        "existing_defenses",
+        "evidence_ids",
+        "incident_ids",
+        "missing_information",
+        "reason"
+      ],
+      "title": "ReviewerLabel",
+      "type": "object"
+    },
+    "SupportQuote": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "quote": {
+          "maxLength": 800,
+          "minLength": 40,
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "quote"
+      ],
+      "title": "SupportQuote",
+      "type": "object"
+    },
+    "VisionLabel": {
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "const": "vision",
+          "title": "Role",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "supported",
+            "insufficient",
+            "conflicting"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/ClaimLabel"
+          },
+          "maxItems": 30,
+          "title": "Claims",
+          "type": "array"
+        }
+      },
+      "required": [
+        "role",
+        "status",
+        "claims"
+      ],
+      "title": "VisionLabel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "dataset_sha256": {
+      "title": "Dataset Sha256",
+      "type": "string"
+    },
+    "item_id": {
+      "pattern": "^P[0-9]{3}$",
+      "title": "Item Id",
+      "type": "string"
+    },
+    "item_sha256": {
+      "title": "Item Sha256",
+      "type": "string"
+    },
+    "reviewer_id": {
+      "pattern": "^[A-Za-z0-9_-]{1,64}$",
+      "title": "Reviewer Id",
+      "type": "string"
+    },
+    "guideline_version": {
+      "const": "1",
+      "title": "Guideline Version",
+      "type": "string"
+    },
+    "guideline_sha256": {
+      "title": "Guideline Sha256",
+      "type": "string"
+    },
+    "review_method": {
+      "const": "self_reported_human_blind",
+      "title": "Review Method",
+      "type": "string"
+    },
+    "action": {
+      "enum": [
+        "pending",
+        "label",
+        "skip",
+        "needs_adjudication"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "rubric": {
+      "anyOf": [
+        {
+          "discriminator": {
+            "mapping": {
+              "researcher": "#/$defs/ResearchLabel",
+              "reviewer": "#/$defs/ReviewerLabel",
+              "vision": "#/$defs/VisionLabel"
+            },
+            "propertyName": "role"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ResearchLabel"
+            },
+            {
+              "$ref": "#/$defs/ReviewerLabel"
+            },
+            {
+              "$ref": "#/$defs/VisionLabel"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Rubric"
+    },
+    "notes": {
+      "maxLength": 5000,
+      "title": "Notes",
+      "type": "string"
+    },
+    "elapsed_seconds_user_reported": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Elapsed Seconds User Reported"
+    }
+  },
+  "required": [
+    "schema_version",
+    "dataset_sha256",
+    "item_id",
+    "item_sha256",
+    "reviewer_id",
+    "guideline_version",
+    "guideline_sha256",
+    "review_method",
+    "action",
+    "rubric",
+    "notes"
+  ],
+  "title": "ReviewDraft",
+  "type": "object"
+}
