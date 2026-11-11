@@ -1,0 +1,4 @@
+-r gpu.in
+gradio>=5.49,<6
+spaces>=0.42,<1
+gradio-client>=1.13,<2
