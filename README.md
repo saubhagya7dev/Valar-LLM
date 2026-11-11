@@ -6,6 +6,20 @@ Evidence-grounded model adaptation for **DevSecOps Incident Researcher**, **DevS
 
 Start with [the Phase 0 checklist](docs/phase-0.md), [architecture](docs/architecture.md), [account setup](docs/account-setup.md) and the [build plan](Valar%20LLM%20Build%20Plan.md).
 
+## Pilot review preparation
+
+The owner authorized small offline data/evaluation preparation while free hosting is blocked. The [pilot review guide](docs/pilot-review.md) covers 24 **unlabeled development items**, licensed source snapshots and original synthetic pages. No human-gold labels, teacher calls or pilot training have been created.
+
+Read [the shared labeling rules](docs/labeling/shared.md), then start in a terminal from the project folder:
+
+```powershell
+uv run valar pilot validate
+uv run valar pilot review --reviewer reviewer1 --item P001
+uv run valar pilot report
+```
+
+The interactive reviewer supplies all decisions. Packets contain evidence and no model predictions; annotations stay in ignored private storage. A pending or invalid form does not count as a label. This preparation does not complete Phase 0 or establish three-role model quality.
+
 ## Local development
 
 Python 3.12–3.14 and uv. Local tools validate contracts and prepare cloud artifacts; they do not train or serve the model publicly.
