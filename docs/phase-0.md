@@ -2,7 +2,7 @@
 
 Status: **in progress — offline checks passed; online gate not passed**.
 
-Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint and fixture-check command outputs. Core checks ran on Windows/Python 3.14; Linux/Python 3.12 GPU execution remains a separate unrun gate. The wheel and source distribution were also built successfully. These results establish software scaffolding, not model quality.
+Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint and fixture-check command outputs. Core checks ran on Windows/Python 3.14. Owner-supplied Colab output now confirms managed Python setup and T4 generation; training and remote serving are still unrun gates. The wheel and source distribution were also built successfully. These results establish software scaffolding and limited inference mechanics, not general model quality.
 
 | Gate | Current evidence | State |
 | --- | --- | --- |
@@ -10,7 +10,7 @@ Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint
 | Versioned task requests, outputs and fixtures | Three roles plus compact researcher submode; synthetic image pages | Implemented |
 | Free account eligibility | Owner reports all accounts created; hosting eligibility not yet verified | Accounts created |
 | Free training GPU | Owner-supplied result confirms model loading on Tesla T4 | Confirmed for this run |
-| Untuned text and image inference | Generation reached; two JSON parsing failures and one reviewer prerequisite failure | Retry failed task checks |
+| Untuned text and image inference | Raw outputs inspected: Vision reads the synthetic image correctly with fenced JSON; researcher and reviewer give incorrect judgments | Mechanics demonstrated; quality failures retained |
 | Tiny online training and masking audit | Runnable three-step QLoRA command | Not run |
 | External checkpoint persistence | Notebook download/restore procedure | Not run |
 | Fresh-session reload | Separate inference command and manifest checks | Not run |
@@ -48,3 +48,15 @@ Code inspection found plain-string system messages being passed to the multimoda
 The owner supplied a second T4 report at `2026-11-11T11:01:26.693720+00:00`, preserved in `results/phase0/colab-base-retry-20261111.json`. The model loaded in 9.494565361 seconds and reached generation for all three cases. Compact research and the image answer failed JSON parsing at the first character; their raw text was not saved by that version, so the cause (for example fencing or prose) remains unknown. Review produced parseable JSON but failed the Supported concern prerequisite invariant. No guardrail has been relaxed and no answer is counted as passing.
 
 The synthetic debug flag now preserves exact unparseable output and parsed candidates rejected by evidence checks, so subsequent failures can be diagnosed without guessing. Normal runs still avoid recording raw failure content. A targeted diagnostic retry is required before choosing formatting changes or proceeding to training.
+
+## Raw-output inspection and next feasibility step
+
+The targeted diagnostic supplied by the owner is preserved in `results/phase0/colab-raw-diagnostic-20261111.json`:
+
+- Vision: a whole-response JSON fence surrounds a cited answer giving 2025 revenue as 42 USD millions. This agrees with the rendered first-party fixture, on this single synthetic page only.
+- Compact researcher: also fenced, but wrongly returns `k=1` for an unexploited advisory and copies instruction phrases into mechanism/prerequisite. Removing the fence does not fix these factual failures.
+- Reviewer: wrongly labels exposure supported while acknowledging missing exposure evidence; its claimed existing defense is not established by the supplied observation. The prerequisite guard rejects the answer.
+
+The runtime now permits only a single complete JSON fence as bounded formatting normalization. Smoke records separately retain `strict_json_valid`, `output_normalization` and a hash of the original decoded text. No prose extraction, field repair or factual rewriting is performed. Prior strict-parser failures remain unchanged in their original result files.
+
+Proceed with the three-step synthetic image training smoke to test masking, memory, adapter saving and restoration. The untuned model does not need to pass security-release quality thresholds before testing the training mechanics. This does not authorize larger training runs or application replacement; its security quality failures remain unresolved. The current Colab source already contains the processor fix needed for training, so this step does not require reinstalling or another source upload.
