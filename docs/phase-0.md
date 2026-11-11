@@ -14,7 +14,7 @@ Local evidence: `results/phase0/offline-checks.json` records actual pytest, lint
 | Tiny online training and masking audit | Three steps plus audited saved weights: all 56 intended LoRA-B factors nonzero; warnings retained | Smoke artifact verified |
 | External checkpoint persistence | Downloaded ZIP independently hashed and audited; checksum matches the cloud value | Verified |
 | Fresh-session reload | Owner followed fresh-session procedure; matching adapter manifest, valid cited image answer | Verified for the smoke fixture |
-| Free cloud hosting | HF account-age blocker; Modal overview shows only $1 credit/$1 usage allowance, with net-spend cap and GPU access unverified | Pending hosting/account controls |
+| Free cloud hosting | HF account-age blocker; observed Modal flow requires a refundable upfront verification charge and is excluded under strict zero outlay | Blocked on a permitted free allocation |
 | Remote adapter text/image request | Prepared Space packager and remote probe | Not run |
 | Laptop-independent operation | Cloud probe procedure | Not run |
 | Cold/queue/warm latency, memory, quota | Colab load/generation and training allocation recorded; public serving queue/quota unmeasured | Partial measurements only |
@@ -82,3 +82,9 @@ The owner supplied the completed fresh-session procedure output at `2026-11-11T1
 On Tesla T4, base/adapter load took 66.433741213 seconds and the single image generation took 14.839639314 seconds. The restored adapter returned 2025 revenue of 42 USD millions with citation `V1:P1`. This passes the supplied-evidence contract and agrees with the synthetic image. The response still required a single JSON fence to be removed, recorded as `strict_json_valid=false` and `output_normalization=single_json_fence`.
 
 Training, saving, external persistence, checkpoint identity and fresh-session image inference have now been demonstrated for this tiny smoke. The same image was used for training and the untuned base already answered it correctly, so this is not evidence of held-out improvement or teacher parity. The remaining Phase 0 gate is a verified no-spend cloud-serving route and laptop-independent remote calls. Modal investigation is authorized only if the account can enforce $0 net spend; see `docs/modal-no-spend.md`.
+
+## Hosting investigation outcome
+
+Modal's observed account-verification flow requires a $0.50 upfront charge described as refundable. The strict zero-cash-outlay policy excludes that flow, independently of whether an eventual $0 net-spend limit could be configured. No payment or deployment was performed. Hugging Face's documented free ZeroGPU route still requires verified email, good standing and an account older than 30 days. A community/university allocation may help only if actually approved on fee-free terms. No immediate usable public-serving host has yet been verified, so Phase 0 remains incomplete; training/restore achievements and artifacts remain valid.
+
+`docs/hosting-grant-draft.md` contains an unsent factual sponsorship request. A grant request is not a grant, and its application route may itself require an eligible existing Space. Do not activate paid hardware or start large-scale labeling/training while presenting this serving blocker as solved.
