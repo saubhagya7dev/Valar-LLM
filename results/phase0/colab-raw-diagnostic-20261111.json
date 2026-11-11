@@ -1,0 +1,78 @@
+{
+  "kind": "owner_supplied_synthetic_raw_diagnostic",
+  "received_on": "2026-11-11",
+  "attempt_file": "results/runs/diagnostic-1794395444200285591.json",
+  "records": [
+    {
+      "id": "compact-advisory",
+      "raw_output": "```json\n{\n  \"k\": 1,\n  \"m\": \"mechanism preserving negation\",\n  \"p\": \"prerequisite or unknown\"\n}\n```"
+    },
+    {
+      "id": "review-unknown",
+      "prediction": {
+        "summary": "Review of synthetic observation and research findings regarding an admin endpoint vulnerability.",
+        "findings": [
+          {
+            "id": "F1",
+            "title": "Unauthenticated access to admin endpoint is a potential security concern",
+            "classification": "Supported concern",
+            "impact": "High",
+            "confidence": "High",
+            "incident_ids": [
+              "I1"
+            ],
+            "evidence_ids": [
+              "E1"
+            ],
+            "mechanism": "Unauthenticated access to the admin endpoint",
+            "prerequisite": "Publicly reachable admin endpoint",
+            "reasoning": "The incident I1 describes an unauthenticated request reaching the admin endpoint, which is supported by the observed code in server.py. The admin endpoint is accessible via the server.py file, and the claim that it is publicly reachable is consistent with the observed code.",
+            "counterevidence": "No evidence of public exposure or access to the admin endpoint.",
+            "missing_information": [
+              "Verification of public reachability of the admin endpoint"
+            ],
+            "prerequisite_assessments": [
+              {
+                "prerequisite": "Publicly reachable admin endpoint",
+                "state": "supported",
+                "evidence_ids": [
+                  "E1"
+                ],
+                "incident_ids": [
+                  "I1"
+                ],
+                "reason": "The admin endpoint is observed in the code, and the claim that it is publicly reachable is consistent with the incident description."
+              }
+            ],
+            "action": "Verify public reachability of the admin endpoint by testing access from a public network.",
+            "verification": "Test the admin endpoint by sending a request from a public network (e.g., via a web browser or HTTP client) to confirm if it is accessible."
+          }
+        ],
+        "existing_defenses": [
+          {
+            "description": "Restrict admin endpoint exposure",
+            "evidence_ids": [
+              "E1"
+            ]
+          }
+        ],
+        "rejected_matches": [],
+        "questions": [
+          "Is the admin endpoint publicly reachable?",
+          "Are there any known mitigations for the admin endpoint?"
+        ],
+        "followup_requests": [
+          {
+            "target": "analyst",
+            "question": "Can we confirm the public reachability of the admin endpoint?"
+          }
+        ]
+      }
+    },
+    {
+      "id": "vision-image",
+      "raw_output": "```json\n{\n  \"status\": \"supported\",\n  \"claims\": [\n    {\n      \"text\": \"2025 revenue was 42 USD millions.\",\n      \"citations\": [\n        \"V1:P1\"\n      ]\n    }\n  ]\n}\n```"
+    }
+  ],
+  "note": "Raw responses preserved without factual repair. This is not independent human-gold evaluation."
+}
