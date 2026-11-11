@@ -8,7 +8,7 @@ Checked 11 November 2026 against official documentation. Documentation availabil
 | HF ZeroGPU | Free personal accounts in good standing with verified email and age over 30 days can host up to two Spaces; Gradio only, shared GPU and daily quotas | Owner reports account created; hosting eligibility not verified | Hosting blocked on account eligibility; prepare service without deploying |
 | Kaggle | Candidate alternative, allocation/account requirements not verified here | Owner reports accounts created; accelerator access unverified | Do not assume GPU type or fixed weekly allowance |
 | Modal | No enforceable no-spend account evidence gathered | No account configured | Excluded from initial route |
-| Qwen3-VL-2B-Instruct | Public model card: Apache-2.0, image-text-to-text; commit resolved from official Hub API | Owner-supplied T4 report: loaded in 179.526 seconds; all three cases failed with TypeError before useful generation | Still provisional; corrected inference retry required |
+| Qwen3-VL-2B-Instruct | Public model card: Apache-2.0, image-text-to-text; commit resolved from official Hub API | Owner-supplied T4 reports confirm loading and generation after the processor fix; two JSON failures and one prerequisite-invariant failure remain | Still provisional; inspect raw synthetic outputs before the next decision |
 
 Sources:
 
