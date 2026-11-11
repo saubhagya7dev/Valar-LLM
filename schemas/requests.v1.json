@@ -1,0 +1,368 @@
+{
+  "$defs": {
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "document": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Document",
+          "type": "string"
+        },
+        "version_id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Version Id",
+          "type": "string"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "text": {
+          "maxLength": 12000,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "document",
+        "version_id",
+        "page",
+        "text"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Observation": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "claim": {
+          "title": "Claim",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "start_line": {
+          "minimum": 1,
+          "title": "Start Line",
+          "type": "integer"
+        },
+        "end_line": {
+          "minimum": 1,
+          "title": "End Line",
+          "type": "integer"
+        },
+        "quote": {
+          "title": "Quote",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "observed",
+            "inferred"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "claim",
+        "path",
+        "start_line",
+        "end_line",
+        "quote",
+        "kind"
+      ],
+      "title": "Observation",
+      "type": "object"
+    },
+    "ProfileView": {
+      "additionalProperties": false,
+      "properties": {
+        "observations": {
+          "items": {
+            "$ref": "#/$defs/Observation"
+          },
+          "maxItems": 16,
+          "title": "Observations",
+          "type": "array"
+        },
+        "technologies": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "maxItems": 8,
+          "title": "Technologies",
+          "type": "array"
+        },
+        "unknowns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unknowns",
+          "type": "array"
+        },
+        "coverage_limit": {
+          "default": "Only supplied observations are available.",
+          "title": "Coverage Limit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "observations"
+      ],
+      "title": "ProfileView",
+      "type": "object"
+    },
+    "ResearchPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/Source"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "sources"
+      ],
+      "title": "ResearchPayload",
+      "type": "object"
+    },
+    "ResearchRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "1",
+          "default": "1",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "task": {
+          "enum": [
+            "researcher",
+            "researcher.compact"
+          ],
+          "title": "Task",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/ResearchPayload"
+        }
+      },
+      "required": [
+        "task",
+        "payload"
+      ],
+      "title": "ResearchRequest",
+      "type": "object"
+    },
+    "ResearchView": {
+      "additionalProperties": false,
+      "properties": {
+        "incidents": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "maxItems": 4,
+          "title": "Incidents",
+          "type": "array"
+        },
+        "research_limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Research Limitations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "incidents",
+        "research_limitations"
+      ],
+      "title": "ResearchView",
+      "type": "object"
+    },
+    "ReviewerPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "profile": {
+          "$ref": "#/$defs/ProfileView"
+        },
+        "research": {
+          "$ref": "#/$defs/ResearchView"
+        },
+        "followup_answer": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Followup Answer"
+        }
+      },
+      "required": [
+        "profile",
+        "research"
+      ],
+      "title": "ReviewerPayload",
+      "type": "object"
+    },
+    "ReviewerRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "1",
+          "default": "1",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "task": {
+          "const": "reviewer",
+          "title": "Task",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/ReviewerPayload"
+        }
+      },
+      "required": [
+        "task",
+        "payload"
+      ],
+      "title": "ReviewerRequest",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 1000,
+          "title": "Title",
+          "type": "string"
+        },
+        "passages": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Passages",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "passages"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "VisionPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "query": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Query",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "query",
+        "evidence"
+      ],
+      "title": "VisionPayload",
+      "type": "object"
+    },
+    "VisionRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "1",
+          "default": "1",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "task": {
+          "const": "vision.answer",
+          "title": "Task",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/VisionPayload"
+        }
+      },
+      "required": [
+        "task",
+        "payload"
+      ],
+      "title": "VisionRequest",
+      "type": "object"
+    }
+  },
+  "discriminator": {
+    "mapping": {
+      "researcher": "#/$defs/ResearchRequest",
+      "researcher.compact": "#/$defs/ResearchRequest",
+      "reviewer": "#/$defs/ReviewerRequest",
+      "vision.answer": "#/$defs/VisionRequest"
+    },
+    "propertyName": "task"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ResearchRequest"
+    },
+    {
+      "$ref": "#/$defs/ReviewerRequest"
+    },
+    {
+      "$ref": "#/$defs/VisionRequest"
+    }
+  ]
+}
