@@ -1,6 +1,6 @@
 # Valar LLM architecture
 
-Status: Phase 0 implementation, 11 November 2026. Model quality and remote runtime compatibility are unmeasured.
+Status: 11 November 2026. Training/save/restore mechanics are demonstrated on a synthetic Colab fixture; public-serving compatibility and general model quality are not established.
 
 Valar adapts one provisional multimodal base for three product roles. The application owns retrieval and orchestration; the model interprets bounded evidence. Compact incident extraction is a submode of the researcher, not a fourth product role.
 
@@ -23,7 +23,7 @@ The initial implementation is a modular Python package, with one cloud smoke ser
 | `contracts` | Strict request envelopes, upstream response schemas, ID/quote/prerequisite consistency | Search, inference, semantic truth judgments |
 | `integrations` | Pure conversion of already-selected application inputs | Imports from either app, mutation of upstream code |
 | `runtime` | Model/processor revision, prompt rendering, image slots, inference | Retrieval, paid fallback, dataset selection |
-| `data` | Synthetic fixture loading/rendering | Human-gold claims or bulk collection in Phase 0 |
+| `data` | Smoke fixtures, small versioned development manifests, blind review packets and private append-only annotation records | Invented human-gold status, bulk collection, teacher calls or training export in this preparation |
 | `train` | Bounded online QLoRA smoke, answer masking, adapter save | Full fine-tuning or automatic publication |
 | `eval` | Offline checks and real inference measurement files | Training selection on test data |
 | `gateway` | Authentication and atomic admission reservations | Product authentication/user isolation in Phase 0 |
@@ -52,7 +52,13 @@ Vision evidence metadata and page images are ordered one-to-one. The serving int
 7. Package a ZeroGPU Space, verify free account eligibility, and measure remote requests.
 8. Only after this gate: pilot data, baselines and task-by-task training.
 
+The owner subsequently authorized a bounded exception for offline preparatory work while hosting is blocked: labeling guides, a small development-only batch and a blind review workflow. This does not complete Phase 0 or authorize large collection, teacher labeling or additional GPU training. `docs/pilot-review.md` records the scope and dataset gaps.
+
 Separate role adapters are the starting design. Phase 0 creates one disposable smoke adapter to test mechanics; it is not a trained three-role release. A balanced shared adapter is a later measured comparison.
+
+## Pilot review boundary
+
+The pilot manifest contains only inputs and provenance. Related advisory, repository and page/version cases share a development family. Packets project an explicit allowlist of evidence, images and attribution; curation tags and predictions are excluded. Review drafts begin pending with no rubric. User-selected labels are structurally checked and stored privately in immutable events tied to guideline, item and dataset hashes. An explicit superseding event preserves revision history. Reports count self-reported reviews and flag primary-label disagreements without declaring independent gold or model accuracy. No training loader consumes these annotations.
 
 ## Availability and cost boundaries
 
