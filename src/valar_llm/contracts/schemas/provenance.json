@@ -1,0 +1,11 @@
+{
+  "captured_on": "2026-11-11",
+  "source": "DevSecOps/devsecops/contracts.py",
+  "sha256": "5f90be19a209ba109d98f26f1f13bb7f0fdb275bda5cfadf3b3fc6fef7dd5290",
+  "symbols": {
+    "compact-incident": "COMPACT_INCIDENT",
+    "incidents": "INCIDENTS",
+    "review": "REVIEW"
+  },
+  "note": "Output wire contracts copied without renaming fields. No upstream changes."
+}
